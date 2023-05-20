@@ -1,0 +1,19 @@
+{
+  "name": "youtube-proxy",
+  "version": "1.0.0",
+  "description": "Anonymous YouTube Proxy",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://10.0.0.215:8050/Nicsena/youtube-proxy.git"
+  },
+  "author": "Nicsena",
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
