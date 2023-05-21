@@ -7,6 +7,15 @@ body, html {
     color: #ffffff;
 }
 
+#SearchResults #Video img { 
+    max-width: 150px;
+}
+
+#SearchResults #Video #VideoInfo img { 
+    width: 16px;
+    height: 16px;
+}
+
 /* Footer */
 footer {
     color: #ffffff;

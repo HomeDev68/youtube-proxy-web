@@ -17,20 +17,117 @@
     </div>
 </form> 
 
-<div id="SearchResults" class="container">
+<div id="SearchResults" class="container p-2 my-2" style="background-color: #161616;">
     <% if(!result.length) { %>
         <% if(page > 1) { %>
-            No more results for <%= query %>
+            <p class="h3 text-center"> No more results for <%= query %> </p>
         <% } else { %>
-            No results found for <%= query %>
+            <p class="h3 text-center"> No results found for <%= query %> </p>
         <% } %>
     <% } else { %>
         <% result.forEach(v => { %>
+
+        <div class="h5"><% v.type %></div>
             <% if(v.type === "video") {%>
-                Type: <%= v["type"] %> - Title: <%= v["title"] %> - ID: <%= v["id"] %> - Views: <%= v["views"] %> - Thumbnail: <%= v["bestThumbnail"]["url"] %>
+                <div id="Video" class="mt-4 mb-4 d-flex">
+                    <a href="/watch/<%= v.id %>" class="d-inline mr-2">
+                        <img src="/vi/<%= v.id %>/mqdefault.jpg" loading="lazy">
+                    </a>
+                    <div id="VideoInfo" class="d-inline">
+                        <a href="/watch/<%= v.id %>" class="h5"><%= v.title %></a>
+                        <br>
+                        <p id="author" class="h6 d-inline">
+                            <% if(v.author) { %>
+                                <% if (v.author.bestAvatar) { %>
+                                    <img src="/yt3<%- (new URL(v.author.bestAvatar.url)).pathname %>" loading="lazy">
+                                <% } %>
+                                <a href="/channel/<%= v.author.channelID %>"><%= v.author.name %></a>
+                            <% } %>
+                        </p>
+                        <br>
+                        <p class="d-inline"><%= v.uploadedAt ? `${v.uploadedAt} |` : "" %> Views: <%= new Intl.NumberFormat().format(v.views) %> | Duration: <b><%= v.isLive ? "LIVE": v.duration %></b></p>
+                        <br>
+                        <a type="button" class="btn btn-dark mt-2" href="/watch/<%= v.id %>">Watch on <%= apptitle %></a>
+                        <a type="button" class="btn btn-dark mt-2" href="<%= v.url %>">Watch on YouTube</a>
+                    </div>
+                </div>
             <% }%>
-            <br>
-        <% }) %>
+
+            <% if(v.type === "shelf") { %>
+                <div class="container p-4 my-1" name="shelf" style="background-color: #161616;">
+                    <p class="h4"><%= v.title %>:</p>
+                    <% v.items.forEach(vi => { %>
+                        <% if(vi.type === "video") { %>
+                            <div id="Video" class="mt-4 mb-4 d-flex">
+                                <a href="/watch/<%= vi.id %>" class="d-inline mr-2">
+                                    <img src="/vi/<%= vi.id %>/mqdefault.jpg" loading="lazy">
+                                </a>
+                                <div id="VideoInfo" class="d-inline">
+                                    <a href="/watch/<%= v.id %>" class="h5"><%= vi.title %></a>
+                                    <br>
+                                    <p id="author" class="h6 d-inline">
+                                        <% if(v.author) { %>
+                                            <% if (vi.author.bestAvatar) { %>
+                                                <img src="/yt3<%- (new URL(vi.author.bestAvatar.url)).pathname %>" loading="lazy">
+                                            <% } %>
+                                            <a href="/channel/<%= vi.author.channelID %>"><%= vi.author.name %></a>
+                                        <% } %>
+                                    </p>
+                                    <br>
+                                    <p class="d-inline"><%= vi.uploadedAt ? `${vi.uploadedAt} |` : "" %> Views: <%= new Intl.NumberFormat().format(vi.views) %> | Duration: <b><%= vi.isLive ? "LIVE": vi.duration %></b></p>
+                                    <br>
+                                    <a type="button" class="btn btn-dark mt-2" href="/watch/<%= vi.id %>">Watch on <%= apptitle %></a>
+                                    <a type="button" class="btn btn-dark mt-2" href="<%= vi.url %>">Watch on YouTube</a>
+                                </div>  
+                            </div>
+                        <% } %>
+
+                        <% if(vi.type === "short") { %>
+                            <div id="Video" class="mt-4 mb-4 d-flex">
+                                <a href="/watch/<%= vi.videoID %>" class="d-inline mr-2">
+                                    <img src="/vi/<%= vi.videoID %>/mqdefault.jpg" loading="lazy">
+                                </a>
+                                <div id="VideoInfo" class="d-inline">
+                                    <a href="/watch/<%= vi.videoID %>" class="h5"><%= vi.title %></a>
+                                    <a class="h5"><%= vi.type ? vi.type : "Unable to get Type" %></a>
+                                    <br>
+                                    <p id="author" class="h6 d-inline">
+                                        <% if(v.channel) { %>
+                                            <% if (vi.channel.bestAvatar) { %>
+                                                <img src="/yt3<%- (new URL(vi.channel.bestAvatar.url)).pathname %>" loading="lazy">
+                                            <% } %>
+                                            <a href="/channel/<%= vi.channel.channelID %>"><%= vi.channel %></a>
+                                        <% } %>
+                                    </p>
+                                    <br>
+                                    <p class="d-inline"><%= vi.uploadedAt ? `${vi.uploadedAt} |` : "" %> Views: <%= vi.views %> | Duration: <b><%= vi.isLive ? "LIVE": vi.duration %></b></p>
+                                    <br>
+                                    <a type="button" class="btn btn-dark mt-2" href="/watch/<%= vi.videoID %>">Watch on <%= apptitle %></a>
+                                    <a type="button" class="btn btn-dark mt-2" href="<%= vi.url %>">Watch on YouTube</a>
+                                </div>  
+                            </div>
+                        <% } %>
+
+                    <% }) %>
+                </div>
+            <% } %>
+            
+                        <% }) %>
+
+    <% } %>
+
+</div>
+
+<div id="buttons" class="text-center mt-2 mb-2">
+
+    <p class="h6 mt-3 mb-3">Page <%= page %></p>
+
+    <% if (page > 1) { %>
+        <a type="button" class="btn btn-dark" href="/search?q=<%= query %>&p=<%= page-1 %>">Previous</a>
+    <% } %>
+
+    <% if (!(page > 1) || result.length) { %>
+        <a type="button" class="btn btn-dark" href="/search?q=<%= query %>&p=<%= page+1 %>">Next</a>
     <% } %>
 
 </div>
