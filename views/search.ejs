@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include("./partial/header.ejs") %>
+</head>
+
+<body>
+
+<%- include("./partial/navbar.ejs") %>
+
+<div id="container" class="container-fluid p-1 my-1 rounded">
+
+<form action="/search" method="GET" class="rounded p-2 my-2 w-50 mx-auto" id="videolink-form">
+    <div class="form-group">
+        <input type="text" class="form-control" name="q" value="<%= query %>" placeholder="YouTube Video Search">
+    </div>
+</form> 
+
+<div id="SearchResults" class="container">
+    <% if(!result.length) { %>
+        <% if(page > 1) { %>
+            No more results for <%= query %>
+        <% } else { %>
+            No results found for <%= query %>
+        <% } %>
+    <% } else { %>
+        <% result.forEach(v => { %>
+            <% if(v.type === "video") {%>
+                Type: <%= v["type"] %> - Title: <%= v["title"] %> - ID: <%= v["id"] %> - Views: <%= v["views"] %> - Thumbnail: <%= v["bestThumbnail"]["url"] %>
+            <% }%>
+            <br>
+        <% }) %>
+    <% } %>
+
+</div>
+
+</div>
+
+</body>
+
+<%- include('./partial/footer.ejs') %>
+
+
+
+</body>
+
+</html>

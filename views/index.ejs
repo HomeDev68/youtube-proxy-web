@@ -9,16 +9,24 @@
 
 <%- include("./partial/navbar.ejs") %>
 
-<div id="container" class="container-fluid p-3 my-3 rounded">
+<div id="container" class="container-fluid p-1 my-1 rounded">
 
-<p class="h2 text-center">Welcome!</p>
+<form action="/search" method="GET" class="rounded p-2 my-2 w-50 mx-auto" id="videolink-form">
+    <div class="form-group">
+        <input type="text" class="form-control" name="q" value="" placeholder="YouTube Video Search">
+    </div>
+</form> 
+
+<p class="h5 text-center"><%= apptitle %> is an Anonymous YouTube Proxy. There are no trackers and ads.</p>
 <br>
+<p class="h6 text-center"><b>DISCLAIMER:</b> Please respect all copyright laws since <%= apptitle %> could fetch, stream, or download videos from YouTube, including copyrighted ones too.</p>
 
-<%- include('./partial/footer.ejs') %>
 
 </div>
 
+</body>
 
+<%- include('./partial/footer.ejs') %>
 
 
 
