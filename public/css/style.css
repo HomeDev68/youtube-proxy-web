@@ -1,19 +1,121 @@
 body, html {
     color: #ffffff;
-    background-color: #121212!important;
+    background-color: #161616!important;
 }
 
-.container-fluid {
+nav {
+    background-color: #12121275; 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.container-fluid, .container {
     color: #ffffff;
 }
 
+#video {
+    background-color: #323232;
+    width:256px;
+    max-width:256px;
+}
+
+#video #thumbnail {
+    width: 256px;
+    max-width: 256px;
+    height: 144px;
+    max-height: 144px;
+}
+
+
+#video #thumbnail img {
+    width: 256px;
+    max-width: 256px;
+    height: 144px;
+    max-height: 144px; 
+}
+
+/* #video #info {
+} */
+
+
 #SearchResults #Video img { 
-    max-width: 150px;
+    width: 256px;
+    max-width: 256px;
 }
 
 #SearchResults #Video #VideoInfo img { 
-    width: 16px;
-    height: 16px;
+    width: 32px;
+    height: 32px;
+}
+
+
+#Recommendedvideos #Video img { 
+    width: 172px;
+    max-width: 172px;
+}
+
+#Recommendedvideos #Video #VideoInfo img { 
+    width: 24px;
+    max-width: 24px;
+}
+
+#VideoInfo #Details #author img {
+    width: 32px;
+    max-width: 32px;
+}
+
+#VideoInfo #Details #VideoDescription pre {
+    color: #ffffff;
+    display: block;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    margin: 1em 0;
+}
+
+
+/* Video Player */
+.video-container {
+    position: relative;
+}
+
+.video-controls-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+}
+
+.video-controls-container video {
+    width: 100%;
+}
+
+.video-container:hover .video-controls-container,
+.video-container:focus-within .video-controls-container,
+.video-container.paused .video-controls-container  {
+    opacity: 1;
+}
+
+.video-controls-container .controls {
+    display: flex;
+    gap: 2px;
+    padding: 1px;
+    align-items: center;
+}
+
+.video-controls-container .controls button {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    height: 30px;
+    width: 30px;
 }
 
 /* Footer */

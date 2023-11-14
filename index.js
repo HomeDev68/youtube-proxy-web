@@ -37,4 +37,57 @@ function run() {
 
 };
 
+// ===================== TEMPORARY FUNCTION =====================
+const path = require("path");
+const fs = require("fs");
+const { checkFolderExists } = require("./src/util")
+var dataFolder = env.DATA_FOLDER || "./data"
+var dataThumbnails = path.resolve(`${dataFolder}/thumbnails`);
+var dataChannelIcons = path.resolve(`${dataFolder}/ChannelIcons`);
+
+async function dataCleanup() {
+
+    var ThumbnailsExist = checkFolderExists(dataThumbnails);
+    var ChannelIconssExist = checkFolderExists(dataChannelIcons);
+
+    // Check if the thumbnails data folder exists or not.
+    if(ThumbnailsExist) {
+
+        try {
+            console.log(`Deleting all video thumbnails`)
+            var files = fs.readdirSync(dataThumbnails);
+            files.map(file => {
+                fs.rmSync(`${dataThumbnails}/${file}`);
+            });
+        } catch(e) {
+
+        }
+
+    } else {
+
+    }
+
+    // Check if the channel icons data folder exists or not.
+    if(ChannelIconssExist) {
+
+        try {
+            console.log(`Deleting all channel profile icons`)
+            var files = fs.readdirSync(dataChannelIcons);
+            files.map(file => {
+                fs.rmSync(`${dataChannelIcons}/${file}`);
+            });
+        } catch(e) {
+
+        }
+
+    } else {
+
+    }
+
+};
+
+
+
+
 run();
+setInterval(dataCleanup, 30000);

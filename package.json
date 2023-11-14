@@ -1,6 +1,7 @@
 {
   "name": "youtube-proxy",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "private": "true",
   "description": "Anonymous YouTube Proxy",
   "main": "index.js",
   "scripts": {
@@ -21,6 +22,7 @@
     "got": "^11.8.6",
     "nodemon": "^2.0.22",
     "ytdl-core": "^4.11.4",
+    "ytpl": "^2.3.0",
     "ytsr": "^3.8.2"
   }
 }

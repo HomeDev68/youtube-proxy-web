@@ -9,7 +9,7 @@
 
 <%- include("./partial/navbar.ejs") %>
 
-<div id="container" class="container-fluid p-1 my-1 rounded">
+<div id="container" class="container-fluid p-2 my-2 rounded">
 
 <form action="/search" method="GET" class="rounded p-2 my-2 w-50 mx-auto" id="videolink-form">
     <div class="form-group">
@@ -17,7 +17,7 @@
     </div>
 </form> 
 
-<div id="SearchResults" class="container p-2 my-2" style="background-color: #161616;">
+<div id="SearchResults" class="container p-2 my-2">
     <% if(!result.length) { %>
         <% if(page > 1) { %>
             <p class="h3 text-center"> No more results for <%= query %> </p>
@@ -27,11 +27,10 @@
     <% } else { %>
         <% result.forEach(v => { %>
 
-        <div class="h5"><% v.type %></div>
             <% if(v.type === "video") {%>
                 <div id="Video" class="mt-4 mb-4 d-flex">
-                    <a href="/watch/<%= v.id %>" class="d-inline mr-2">
-                        <img src="/vi/<%= v.id %>/mqdefault.jpg" loading="lazy">
+                    <a href="/watch/<%= v.id %>" class="rounded-3 mr-2">
+                        <img src="/tn/<%= v.id %>"  loading="lazy">
                     </a>
                     <div id="VideoInfo" class="d-inline">
                         <a href="/watch/<%= v.id %>" class="h5"><%= v.title %></a>
@@ -39,9 +38,10 @@
                         <p id="author" class="h6 d-inline">
                             <% if(v.author) { %>
                                 <% if (v.author.bestAvatar) { %>
-                                    <img src="/yt3<%- (new URL(v.author.bestAvatar.url)).pathname %>" loading="lazy">
+                                    <img src="/ci<%- (new URL(v.author.bestAvatar.url)).pathname %>" loading="lazy">
                                 <% } %>
                                 <a href="/channel/<%= v.author.channelID %>"><%= v.author.name %></a>
+                                <span class="bi bi-check"></span>
                             <% } %>
                         </p>
                         <br>
@@ -54,13 +54,13 @@
             <% }%>
 
             <% if(v.type === "shelf") { %>
-                <div class="container p-4 my-1" name="shelf" style="background-color: #161616;">
+                <div class="container p-0 my-2" name="shelf">
                     <p class="h4"><%= v.title %>:</p>
                     <% v.items.forEach(vi => { %>
                         <% if(vi.type === "video") { %>
                             <div id="Video" class="mt-4 mb-4 d-flex">
                                 <a href="/watch/<%= vi.id %>" class="d-inline mr-2">
-                                    <img src="/vi/<%= vi.id %>/mqdefault.jpg" loading="lazy">
+                                    <img src="/tn/<%= vi.id %>"  loading="lazy">
                                 </a>
                                 <div id="VideoInfo" class="d-inline">
                                     <a href="/watch/<%= v.id %>" class="h5"><%= vi.title %></a>
@@ -68,7 +68,7 @@
                                     <p id="author" class="h6 d-inline">
                                         <% if(v.author) { %>
                                             <% if (vi.author.bestAvatar) { %>
-                                                <img src="/yt3<%- (new URL(vi.author.bestAvatar.url)).pathname %>" loading="lazy">
+                                                <img src="/ci<%- (new URL(vi.author.bestAvatar.url)).pathname %>" loading="lazy">
                                             <% } %>
                                             <a href="/channel/<%= vi.author.channelID %>"><%= vi.author.name %></a>
                                         <% } %>
@@ -85,7 +85,7 @@
                         <% if(vi.type === "short") { %>
                             <div id="Video" class="mt-4 mb-4 d-flex">
                                 <a href="/watch/<%= vi.videoID %>" class="d-inline mr-2">
-                                    <img src="/vi/<%= vi.videoID %>/mqdefault.jpg" loading="lazy">
+                                    <img src="/tn/<%= vi.id %>"  loading="lazy">
                                 </a>
                                 <div id="VideoInfo" class="d-inline">
                                     <a href="/watch/<%= vi.videoID %>" class="h5"><%= vi.title %></a>
@@ -94,7 +94,7 @@
                                     <p id="author" class="h6 d-inline">
                                         <% if(v.channel) { %>
                                             <% if (vi.channel.bestAvatar) { %>
-                                                <img src="/yt3<%- (new URL(vi.channel.bestAvatar.url)).pathname %>" loading="lazy">
+                                                <img src="/ci<%- (new URL(vi.channel.bestAvatar.url)).pathname %>" loading="lazy">
                                             <% } %>
                                             <a href="/channel/<%= vi.channel.channelID %>"><%= vi.channel %></a>
                                         <% } %>

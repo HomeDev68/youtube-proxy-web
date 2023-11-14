@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<%- include("./partial/header.ejs") %>
+</head>
+
+<body>
+
+<%- include("./partial/navbar.ejs") %>
+
+<div id="container" class="container-fluid overflow-hidden h-75 mh-75 p-2 my-2">
+
+<div class="video-container mb-2">
+    <!-- <div class="video-controls-container">
+        <div class="timeline-container"></div>
+        <div class="controls">
+            <button class="play-pause-btn">
+                Play
+            </button>
+            <button class="play-pause-btn">
+                Play
+            </button>
+        </div>
+    </div> -->
+    <video preload="none" src="/stream/<%= result["player_response"].videoDetails.videoId %>" style="width: 100%; max-width: 100%;" controls></video>
+</div>
+
+
+<div class="row">
+
+<div id="VideoInfo" class="col-xl-8 flex-row">
+
+<div id="Details">
+<p class="h4"> <%= result["player_response"].videoDetails.title %> </p>
+<p class="h5"><%= new Intl.NumberFormat().format(result["player_response"].videoDetails.viewCount)%> Views </p>
+<p class="h5"><%= new Intl.NumberFormat().format(ratio?.likes) %> Likes | <%= new Intl.NumberFormat().format(ratio?.dislikes) %> Dislikes</p>
+
+<p id="author" class="h5 d-inline">
+    <% if(result["player_response"].videoDetails.author) { %>
+        <% if (result["player_response"].videoDetails.channelId) { %>
+            <img src="/ci<%= (new URL(result.videoDetails.author.thumbnails[0].url)).pathname %>" loading="lazy">
+        <% } %>
+        <a href="/channel/<%= result["player_response"].videoDetails.channelId %>"> <%= result["player_response"].videoDetails.author %></a>
+    <% } %>
+</p>
+
+<br>
+<br>
+
+<div id="VideoDescription">
+<p class="h5">Description:</p>
+<pre class="h6"><%= result["player_response"].videoDetails.shortDescription%></pre> 
+</div>
+
+</div>
+
+
+<div class="h3"> Adpative Formats:
+    <% result["player_response"].streamingData.adaptiveFormats.forEach(f => { %>
+        <p class="h5"> <%= f["qualityLabel"] %>@<%= f["fps"] %> - <%= f["mimeType"] %> - <%= f["itag"] %></p>
+    <% }) %>
+</div>
+
+</div>
+
+<div class="col-sm-4 flex-row">
+<br>
+<div id="Recommendedvideos" class="h4"> Recommended Videos:
+    <% result["related_videos"].forEach(f => { %>
+    <div id="Video" class="mt-4 mb-4 d-flex">
+        <a href="/watch/<%= f.id %>" class="rounded-3 mr-2">
+            <img src="/tn/<%= f.id %>" loading="lazy">
+        </a>
+        <div id="VideoInfo" class="d-inline">
+            <a href="/watch/<%= f.id %>" class="h6"><%= f.title %></a>
+            <br>
+            <p id="author" class="h6 d-inline">
+                <% if(f.author) { %>
+                    <% if (f.author.id) { %>
+                        <img src="/ci<%- (new URL(f.author.thumbnails[0].url)).pathname %>" loading="lazy">
+                        <% } %>
+                    <a href="/channel/<%= f.author.id %>"><%= f.author.name %></a>
+                <% } %>
+            </p>
+            <br>
+            <p class="h6 d-inline"><%= f.published ? `${f.published} |` : "" %> Views: <%= new Intl.NumberFormat().format(f.view_count) %> | Duration: <b><%= f.isLive ? "LIVE": functions.fancyTimeFormat(f.length_seconds)%></b></p>
+        </div>
+    </div>
+<% }) %>
+    
+</div>
+
+</div>
+
+
+</div>
+
+
+</body>
+
+<%- include('./partial/footer.ejs') %>
+
+
+
+</body>
+
+</html>
